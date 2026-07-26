@@ -1,34 +1,14 @@
-import  { useEffect, useState } from 'react'
-import axios from 'axios';
+import { useEffect, useState } from 'react'
 import '../../styles/reels.css'
 import ReelFeed from '../../components/ReelFeed'
-import { API_BASE_URL } from '../../api/config'
-
-const api = axios.create({
-    baseURL: API_BASE_URL,
-    withCredentials: true,
-});
-
-api.interceptors.response.use(
-    response => response,
-    error => {
-        if (error.response?.status === 401) {
-            window.location.href = "/login";
-        }
-
-        return Promise.reject(error);
-    }
-);
-
+import { api } from '../../api/config'
 
 const Home = () => {
     const [ videos, setVideos ] = useState([])
 
     useEffect(() => {
-        axios.get(`${API_BASE_URL}/api/food`, { withCredentials: true })
+        api.get('/api/food')
             .then(response => {
-
-
                 setVideos(response.data.foodItems)
             })
             .catch((err) => { return err })
@@ -37,7 +17,7 @@ const Home = () => {
 
     async function likeVideo(item) {
 
-        const response = await api.post(`${API_BASE_URL}/api/food/like`, { foodId: item._id }, {withCredentials: true})
+        const response = await api.post('/api/food/like', { foodId: item._id })
 
         if(response.data.like){
             setVideos(prev =>
@@ -72,7 +52,7 @@ const Home = () => {
     }
 
     async function saveVideo(item) {
-        const response = await api.post(`${API_BASE_URL}/api/food/save`, { foodId: item._id }, { withCredentials: true })
+        const response = await api.post('/api/food/save', { foodId: item._id })
         
         if(response.data.save){
             setVideos(prev =>

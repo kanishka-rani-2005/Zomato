@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import '../../styles/auth-shared.css';
-import axios from 'axios';
+import { api } from '../../api/config'
 import { useNavigate } from 'react-router-dom';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const FoodPartnerRegister = () => {
 
@@ -19,14 +17,14 @@ const FoodPartnerRegister = () => {
     const password = e.target.password.value;
     const address = e.target.address.value;
 
-    axios.post(`${API_BASE_URL}/api/auth/food-partner/register`, {
+    api.post('/api/auth/food-partner/register', {
       name:businessName,
       contactName,
       phone,
       email,
       password,
       address
-    }, { withCredentials: true })
+    })
       .then(response => {
         navigate("/create-food"); // Redirect to create food page after successful registration
       })

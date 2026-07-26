@@ -1,14 +1,13 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../styles/reels.css'
-import axios from 'axios'
 import ReelFeed from '../../components/ReelFeed'
-import { API_BASE_URL } from '../../api/config'
+import { api } from '../../api/config'
 
 const Saved = () => {
     const [ videos, setVideos ] = useState([])
 
     useEffect(() => {
-        axios.get(`${API_BASE_URL}/api/food/save`, { withCredentials: true })
+        api.get('/api/food/save')
             .then(response => {
                 const savedFoods = response.data.savedFoods.map((item) => ({
                     _id: item.food._id,
@@ -25,7 +24,7 @@ const Saved = () => {
 
     const removeSaved = async (item) => {
         try {
-            const response = await axios.post(`${API_BASE_URL}/api/food/save`, { foodId: item._id }, { withCredentials: true })
+            const response = await api.post('/api/food/save', { foodId: item._id })
             if (response.data.save === false) {
                 setVideos((prev) => prev.filter((v) => v._id !== item._id))
             }

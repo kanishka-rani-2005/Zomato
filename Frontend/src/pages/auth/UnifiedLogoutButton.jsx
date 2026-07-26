@@ -1,16 +1,15 @@
-import axios from 'axios'
+import { api } from '../../api/config'
 import { useNavigate } from 'react-router-dom'
-import { API_BASE_URL } from '../../api/config'
 
 const UnifiedLogoutButton = ({ className }) => {
   const navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
-      await axios.get(`${API_BASE_URL}/api/auth/user/logout`, { withCredentials: true })
+      await api.get('/api/auth/user/logout')
     } catch (err) {console.log(err)}
     try {
-      await axios.get(`${API_BASE_URL}/api/auth/food-partner/logout`, { withCredentials: true })
+      await api.get('/api/auth/food-partner/logout')
     } catch (err) {console.log(err)}
     navigate('/user/login')
   }
