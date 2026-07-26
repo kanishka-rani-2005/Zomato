@@ -1,7 +1,8 @@
 const foodModel=require('../models/food.model')
 const storageService = require('../services/storage.service');
 const { v4: uuid } = require("uuid")
-
+const likeModel=require("../models/likes.model")
+const saveModel=require("../models/save.model")
 
 async function addFoodItem(req,res) {
     const fileUploadResult = await storageService.uploadFile(req.file.buffer, uuid())
@@ -29,11 +30,80 @@ async function getFoodItems(req,res){
     })
 }
 
-async function getFoodItemsById(req,res){
+async function likeController(req,res){
+    const {foodId}=req.body;
+    const user=req.user
+
+    const isAlreadyLike = await likeModel.findOne({
+        user:user._id,
+        food:foodId
+    })
+
+    if(isAlreadyLike){
+        await likeModel.deleteOne({
+            user:user._id,
+            food:foodId
+        })
+        await foodModel.findByIdAndUpdate(foodId,{
+            $inc:{likeCount:-1}//decrease count
+        })
+        return res.status(201).json({
+            message:"Food unliked successfully"
+        })
+
+    }
+
+    const like=await likeModel.create({
+        user:user._id,
+        food:foodId
+    })
+
+    await foodModel.findByIdAndUpdate(foodId,{
+            $inc:{likeCount:1}//increase count
+    })
+
+    return res.status(201).json({
+        message:"Food liked succesfully",
+        like
+    })
 
 }
+
+
+async function saveController(req,res) {
+    const {foodId}=req.body;
+    const user=req.user
+    
+    const isAlreadySaved=await saveModel.findOne({
+        user:user._id,
+        food:foodId
+    })
+
+    if(isAlreadySaved){
+        await saveModel.deleteOne({
+            user:user._id,
+            food:foodId
+        })
+        return res.status(200).json({
+            message:"Food unsaved unsuccessfully"
+        })
+    }
+
+
+    const save=await saveModel.create({
+        user:user._id,
+        food:foodId
+    })
+
+    return res.status(201).json({
+        message:"Food saved successfully."
+    })
+}
+
+
 module.exports={
     addFoodItem,
     getFoodItems,
-    getFoodItemsById
+    likeController,
+    saveController
 }

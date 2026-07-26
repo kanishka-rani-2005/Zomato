@@ -17,9 +17,14 @@ const upload=multer({
 router.post('/',authMiddleware.authFoodPartnerMiddleware,
                 upload.single('video'),
                 foodContoller.addFoodItem)
+
 router.get('/',authMiddleware.authUserMiddleware,
                 foodContoller.getFoodItems)
 
+router.post('/like',authMiddleware.authUserMiddleware,
+                foodContoller.likeController)
 
-
+router.post('/save',authMiddleware.authUserMiddleware,
+                foodContoller.saveController)
+                
 module.exports=router
