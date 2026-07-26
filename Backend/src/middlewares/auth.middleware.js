@@ -23,7 +23,6 @@ async function authFoodPartnerMiddleware(req,res,next){
         req.foodPartner=foodPartner
         return next()
     }catch(err){
-        console.log(err)
         return res.status(400).json({
             message:"Unauthorized Access , Token is invalid!!!"
         })
@@ -50,7 +49,6 @@ async function authUserMiddleware(req,res,next){
         req.user=user
         return next()
     }catch(err){
-        console.log(err)
         return res.status(400).json({
             message:"Unauthorized Access , Token is invalid!!!"
         })

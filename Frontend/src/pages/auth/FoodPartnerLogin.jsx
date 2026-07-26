@@ -19,7 +19,6 @@ const FoodPartnerLogin = () => {
       password
     }, { withCredentials: true });
 
-    console.log(response.data); 
 
     navigate("/create-food"); // Redirect to create food page after login
 

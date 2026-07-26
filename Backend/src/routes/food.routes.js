@@ -26,5 +26,8 @@ router.post('/like',authMiddleware.authUserMiddleware,
 
 router.post('/save',authMiddleware.authUserMiddleware,
                 foodContoller.saveController)
-                
+
+router.get('/save',authMiddleware.authUserMiddleware,
+                foodContoller.getsaveController)
+
 module.exports=router
