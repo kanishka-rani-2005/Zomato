@@ -37,7 +37,11 @@ async function createRegisterController(req,res){
 
     const token =jwt.sign({id:user._id},process.env.JWT_SECRET)
 
-    res.cookie('token',token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None"
+    });
 
     return res.status(201).json({
         message:"User register successfully.",
@@ -79,7 +83,11 @@ async function createLoginController(req,res){
 
     const token =jwt.sign({id:user._id},process.env.JWT_SECRET)
 
-    res.cookie('token',token)
+    res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None"
+});
 
     return res.status(201).json({
         message:"User login successfully.",
@@ -139,7 +147,11 @@ async function createRegisterFoodPartnerController(req,res){
 
     const token =jwt.sign({id:user._id},process.env.JWT_SECRET)
 
-    res.cookie('token',token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None"
+    });
 
     return res.status(201).json({
         message:"FoodPartner register successfully.",
@@ -182,7 +194,11 @@ async function createFoodPartnerLogin(req,res){
 
     const token =jwt.sign({id:user._id},process.env.JWT_SECRET)
 
-    res.cookie('token',token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None"
+    });
 
     return res.status(201).json({
         message:"Food Partner login successfully.",
