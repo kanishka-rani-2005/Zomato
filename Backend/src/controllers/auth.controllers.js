@@ -3,6 +3,8 @@ const userModel=require("../models/user.model")
 const bcrypt=require("bcryptjs")
 const jwt=require("jsonwebtoken")
 const tokenBlacklistModel=require('../models/blacklist.model')
+const foodpartnerModel=require('../models/foodpartner.model')
+
 
 async function createRegisterController(req,res){
 
@@ -105,4 +107,102 @@ async function createLogoutController(req,res){
     })
 }
 
-module.exports={createRegisterController,createLoginController,createLogoutController}
+async function createRegisterFoodPartnerController(req,res){
+    const {name,email,password}=req.body
+    if(!name || !email || !password){
+        return res.status(400).json({
+            message:"Please enter required information"
+        })
+    }
+
+    const isExist=await foodpartnerModel.findOne({email})
+
+    if(isExist){
+        return res.status(400).json({
+            message:"FoodPartner already exist with this email. Try any other account to register."
+        })
+    }
+
+    const hashedPassword=await bcrypt.hash(password,10)
+
+
+    const user=await foodpartnerModel.create({
+        name,
+        email,
+        password:hashedPassword
+    })
+
+    const token =jwt.sign({id:user._id},process.env.JWT_SECRET)
+
+    res.cookie('token',token)
+
+    return res.status(201).json({
+        message:"FoodPartner register successfully.",
+        foodpartner:{
+            _id:user._id,
+            email:user.email,
+            name:user.name
+        }
+    })
+}
+
+async function createFoodPartnerLogin(req,res){
+     const{email,password}=req.body;
+
+    if(!email || !password){
+        return res.status(400).json({
+            message:"Please provide correct email and password"
+        })
+    }
+
+    const user=await foodpartnerModel.findOne({email});
+
+    if(!user){
+         return res.status(422).json({
+            message:"Retry!!! FoodPartner does not exist with this email and pasdword",
+            status:"failed"
+        })
+    }
+
+    const isCorrectPassword=await bcrypt.compare(password,user.password);
+
+    if(!isCorrectPassword){
+        return res.status(400).json({
+            message:"Invalid password"
+        })
+    }
+
+    const token =jwt.sign({id:user._id},process.env.JWT_SECRET)
+
+    res.cookie('token',token)
+
+    return res.status(201).json({
+        message:"Food Partner login successfully.",
+        foodpartner:{
+            _id:user._id,
+            email:user.email,
+        }
+    })
+}
+
+async function createFoodPartnerLogout(req,res){
+    const token=req.cookies.token||req.headers.authorization?.split(" ")[1]
+
+    if(!token){
+        return res.status(200).json({
+            message:"Token required to log out"
+        })
+    }
+
+    res.clearCookie('token')
+
+    await tokenBlacklistModel.create({
+        token:token
+    })
+    res.status(200).json({
+        message:"Food Partner log out successfully"
+    })
+}
+module.exports={createRegisterController,createLoginController,createLogoutController,
+    createFoodPartnerLogin,createRegisterFoodPartnerController,createFoodPartnerLogout
+}
