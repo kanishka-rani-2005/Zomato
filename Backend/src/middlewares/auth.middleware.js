@@ -7,7 +7,7 @@ async function authFoodPartnerMiddleware(req,res,next){
     const token=req.cookies.token || req.headers.authorization?.split(" ")[1]
 
     if(!token){
-        return res.status(400).json({
+        return res.status(401).json({
             message:"Unauthorized Access , Login to proceed."
         })
     }
@@ -23,7 +23,7 @@ async function authFoodPartnerMiddleware(req,res,next){
         req.foodPartner=foodPartner
         return next()
     }catch(err){
-        return res.status(400).json({
+        return res.status(401).json({
             message:"Unauthorized Access , Token is invalid!!!"
         })
     }
@@ -33,7 +33,7 @@ async function authUserMiddleware(req,res,next){
     const token=req.cookies.token || req.headers.authorization?.split(" ")[1]
 
     if(!token){
-        return res.status(400).json({
+        return res.status(401).json({
             message:"Unauthorized Access , Login to proceed."
         })
     }
@@ -49,7 +49,7 @@ async function authUserMiddleware(req,res,next){
         req.user=user
         return next()
     }catch(err){
-        return res.status(400).json({
+        return res.status(401).json({
             message:"Unauthorized Access , Token is invalid!!!"
         })
     }
