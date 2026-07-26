@@ -91,7 +91,7 @@ async function createLogoutController(req,res){
 
     if(!token){
         return res.status(200).json({
-            message:"User already logged out."
+            message:"Token required to log out"
         })
     }
 
