@@ -61,7 +61,7 @@ const CreateFood = () => {
         formData.append('description', description);
         formData.append("video", videoFile);
 
-        await api.post('/api/food', formData)
+        await axios.post('/api/food', formData)
 
         navigate("/"); 
     };
