@@ -2,7 +2,7 @@
 import './App.css'
 import './styles/theme.css'
 import AppRoutes from './routes/AppRoutes'
-import ThemeToggle from './components/ThemeToggle'
+// ThemeToggle removed in favor of the in-page ActionMenu
 
 function App() {
   const [theme, setTheme] = useState('light')
@@ -22,7 +22,6 @@ function App() {
 
   return (
     <>
-      <ThemeToggle theme={theme} setTheme={setTheme} />
       <AppRoutes />
     </>
   )

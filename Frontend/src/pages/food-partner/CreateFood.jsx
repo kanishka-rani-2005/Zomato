@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import '../../styles/create-food.css';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../../api/config';
+import ActionMenu from '../../components/ActionMenu'
 
 const CreateFood = () => {
     const [ name, setName ] = useState('');
@@ -16,7 +17,7 @@ const CreateFood = () => {
 
     useEffect(() => {
         if (!videoFile) {
-            setVideoURL('');
+            setVideoURL(' ') ;
             return;
         }
         const url = URL.createObjectURL(videoFile);
@@ -55,16 +56,14 @@ const CreateFood = () => {
 
         formData.append('name', name);
         formData.append('description', description);
-        formData.append("mama", videoFile);
+        formData.append("video", videoFile);
 
         const response = await axios.post(`${API_BASE_URL}/api/food`, formData, {
             withCredentials: true,
         })
 
         console.log(response.data);
-        navigate("/"); // Redirect to home or another page after successful creation
-        // Optionally reset
-        // setName(''); setDescription(''); setVideoFile(null);
+        navigate("/"); 
     };
 
     const isDisabled = useMemo(() => !name.trim() || !videoFile, [ name, videoFile ]);
@@ -72,9 +71,12 @@ const CreateFood = () => {
     return (
         <div className="create-food-page">
             <div className="create-food-card">
-                <header className="create-food-header">
+                <header className="create-food-header" style={{ position: 'relative' }}>
                     <h1 className="create-food-title">Create Food</h1>
                     <p className="create-food-subtitle">Upload a short video, give it a name, and add a description.</p>
+                    <div style={{ position: 'absolute', top: 12, right: 12 }}>
+                        <ActionMenu />
+                    </div>
                 </header>
 
                 <form className="create-food-form" onSubmit={onSubmit}>

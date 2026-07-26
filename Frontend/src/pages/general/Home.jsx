@@ -6,7 +6,6 @@ import { API_BASE_URL } from '../../api/config'
 
 const Home = () => {
     const [ videos, setVideos ] = useState([])
-    // Autoplay behavior is handled inside ReelFeed
 
     useEffect(() => {
         axios.get(`${API_BASE_URL}/api/food`, { withCredentials: true })
@@ -19,7 +18,6 @@ const Home = () => {
             .catch(() => { /* noop: optionally handle error */ })
     }, [])
 
-    // Using local refs within ReelFeed; keeping map here for dependency parity if needed
 
     async function likeVideo(item) {
 

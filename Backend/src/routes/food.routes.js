@@ -20,4 +20,6 @@ router.post('/',authMiddleware.authFoodPartnerMiddleware,
 router.get('/',authMiddleware.authUserMiddleware,
                 foodContoller.getFoodItems)
 
+
+
 module.exports=router

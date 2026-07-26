@@ -19,7 +19,8 @@ const UserRegister = () => {
 
 
         const response = await axios.post(`${API_BASE_URL}/api/auth/user/register`, {
-            fullName: firstName + " " + lastName,
+            firstName: firstName ,
+            lastName:lastName,
             email,
             password
         },

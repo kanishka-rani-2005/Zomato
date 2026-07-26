@@ -28,7 +28,12 @@ async function getFoodItems(req,res){
         foodItems
     })
 }
+
+async function getFoodItemsById(req,res){
+
+}
 module.exports={
     addFoodItem,
-    getFoodItems
+    getFoodItems,
+    getFoodItemsById
 }

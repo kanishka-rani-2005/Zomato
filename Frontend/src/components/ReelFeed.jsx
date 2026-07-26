@@ -1,6 +1,6 @@
 import  { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-
+import ActionMenu from './ActionMenu'
 
 const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' }) => {
   const videoRefs = useRef(new Map())
@@ -53,6 +53,7 @@ const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' 
 
             <div className="reel-overlay">
               <div className="reel-overlay-gradient" aria-hidden="true" />
+              <ActionMenu />
               <div className="reel-actions">
                 <div className="reel-action-group">
                   <button

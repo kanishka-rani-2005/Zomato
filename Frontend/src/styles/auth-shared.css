@@ -27,8 +27,8 @@
   position: relative;
   width: 100%;
   max-width: 520px;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   padding: var(--space-7) var(--space-7) var(--space-5);
   border-radius: 32px;
   box-shadow: 0 30px 80px rgba(15, 23, 42, 0.14);
@@ -45,7 +45,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(135deg, rgba(255,255,255,.18), transparent 55%);
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent 55%);
 }
 
 .auth-card header {
@@ -105,7 +105,7 @@ form.auth-form {
 .field-group textarea {
   appearance: none;
   border: 1px solid rgba(148, 163, 184, 0.24);
-  background: rgba(255, 255, 255, 0.96);
+  background: var(--color-surface);
   padding: 15px 18px;
   font: inherit;
   border-radius: 22px;
@@ -124,14 +124,14 @@ form.auth-form {
 
 .field-group input::placeholder,
 .field-group textarea::placeholder {
-  color: rgba(71, 85, 105, 0.6);
+  color: var(--color-text-secondary);
 }
 
 .field-group input:focus-visible,
 .field-group textarea:focus-visible {
   border-color: var(--color-accent);
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
-  background: #fff;
+  background: var(--color-surface-alt);
 }
 
 .two-col {
@@ -168,6 +168,45 @@ button.auth-submit:active {
   transform: translateY(1px);
 }
 
+.logout-button {
+  border: 1px solid rgba(239, 68, 68, 0.24);
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--color-danger);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base), color var(--transition-base);
+}
+
+html.dark .logout-button {
+  background: rgba(248, 113, 113, 0.16);
+  border-color: rgba(248, 113, 113, 0.3);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(248, 113, 113, 0.16);
+}
+
+.logout-button:hover {
+  transform: translateY(-1px);
+  background: rgba(239, 68, 68, 0.18);
+  box-shadow: var(--shadow-md);
+}
+
+html.dark .logout-button:hover {
+  background: rgba(248, 113, 113, 0.24);
+}
+
+.logout-button:focus-visible {
+  outline: 3px solid rgba(239, 68, 68, 0.28);
+  outline-offset: 2px;
+}
+
 button.auth-submit:focus-visible {
   outline: 3px solid rgba(59, 130, 246, 0.32);
   outline-offset: 2px;
@@ -179,7 +218,7 @@ button.auth-submit:focus-visible {
   line-height: 1.6;
 }
 
-.gap-sm { gap: var(--space-2); }
+/* .gap-sm { gap: var(--space-2); } */
 
 @media (max-width: 580px) {
   .auth-card {
