@@ -3,9 +3,13 @@ const mongoose=require("mongoose")
 
 
 const userSchema=new mongoose.Schema({
-    fullName:{
+    firstName:{
         type:String,
         required:[true,'Please enter your name']
+    },
+    lastName:{
+        type:String,
+        required:true
     },
     email:{
         type:String,

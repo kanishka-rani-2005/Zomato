@@ -8,10 +8,10 @@ const foodpartnerModel=require('../models/foodpartner.model')
 
 async function createRegisterController(req,res){
 
-    const {fullName,email,password}=req.body
+    const {firstName,lastName,email,password}=req.body
 
 
-    if(!fullName || !email ){
+    if(!firstName || !email ||!lastName){
         return res.status(400).json({
             message:"Please enter required information"
         })
@@ -29,7 +29,8 @@ async function createRegisterController(req,res){
 
 
     const user=await userModel.create({
-        fullName,
+        firstName,
+        lastName,
         email,
         password:hashedPassword
     })
@@ -43,7 +44,8 @@ async function createRegisterController(req,res){
         user:{
             _id:user._id,
             email:user.email,
-            fullName:user.fullName
+            firstName:user.firstName,
+            lastName:user.lastName
         }
     })
 }
@@ -108,7 +110,7 @@ async function createLogoutController(req,res){
 }
 
 async function createRegisterFoodPartnerController(req,res){
-    const {name,email,password}=req.body
+    const {name,email,password,phone,address,contactName}=req.body
     if(!name || !email || !password){
         return res.status(400).json({
             message:"Please enter required information"
@@ -129,7 +131,10 @@ async function createRegisterFoodPartnerController(req,res){
     const user=await foodpartnerModel.create({
         name,
         email,
-        password:hashedPassword
+        password:hashedPassword,
+        address,
+        phone,
+        contactName
     })
 
     const token =jwt.sign({id:user._id},process.env.JWT_SECRET)
@@ -141,7 +146,10 @@ async function createRegisterFoodPartnerController(req,res){
         foodpartner:{
             _id:user._id,
             email:user.email,
-            name:user.name
+            name:user.name,
+            address:address,
+            phone:phone,
+            contactName:contactName
         }
     })
 }

@@ -1,0 +1,18 @@
+﻿* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  width: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background 220ms ease, color 220ms ease;
+}
+
+body {
+  font-family: var(--font-stack);
+}
