@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import '../../styles/create-food.css';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../../api/config';
+// import { API_BASE_URL } from '../../api/config';
 import ActionMenu from '../../components/ActionMenu'
+import { api } from '../../api/config'
 
 
 
@@ -61,7 +62,7 @@ const CreateFood = () => {
         formData.append('description', description);
         formData.append("video", videoFile);
 
-        await axios.post('/api/food', formData)
+        await api.post('/api/food', formData)
 
         navigate("/"); 
     };
