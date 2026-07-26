@@ -16,8 +16,8 @@ const Saved = () => {
                     description: item.food.description,
                     likesCount: item.food.likesCount,
                     savesCount: item.food.savesCount,
-                    // commentsCount: item.food.commentsCount,
-                    foodPartner: item.food.foodPartner,
+                    foodPartner: item.food.foodPartner?._id,
+                    foodPartnerName: item.food.foodPartner?.name || 'Unknown',
                 }))
                 setVideos(savedFoods)
             })
@@ -35,11 +35,12 @@ const Saved = () => {
     }
 
     return (
-        <ReelFeed
+            <ReelFeed
             items={videos}
             onSave={removeSaved}
             emptyMessage="No saved videos yet."
         />
+    
     )
 }
 

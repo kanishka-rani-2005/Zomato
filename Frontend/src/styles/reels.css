@@ -84,6 +84,13 @@
   max-width: 90ch;
 }
 
+.reel-meta {
+  color: #fff;
+  opacity: 0.92;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
 .reel-btn {
   align-self: flex-start;
   background: var(--color-accent);
@@ -279,6 +286,21 @@ html.dark .action-menu-menu {
   border-color: rgba(255,255,255,0.08);
   color: #fff;
 }
+.reel-action svg{
+    transition:.25s ease;
+}
+
+.reel-action.liked svg{
+    transform:scale(1.2);
+}
+
+.reel-action.saved svg{
+    transform:scale(1.2);
+}
+
+.reel-action:hover svg{
+    transform:scale(1.15);
+}
 
 /* Theme button styling */
 .action-menu-theme-btn {
@@ -316,3 +338,4 @@ html.dark .action-menu-theme-btn {
 .empty-state{
   position: absolute; inset: 0; display: grid; place-items: center; color: #fff;
 }
+

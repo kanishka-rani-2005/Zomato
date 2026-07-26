@@ -23,9 +23,33 @@ const Home = () => {
         const response = await axios.post(`${API_BASE_URL}/api/food/like`, { foodId: item._id }, {withCredentials: true})
 
         if(response.data.like){
-            setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, likesCount: v.likesCount + 1 } : v))
+            setVideos(prev =>
+  prev.map(v =>
+    v._id === item._id
+      ? {
+          ...v,
+          liked: response.data.like,
+          likesCount: response.data.like
+            ? v.likesCount + 1
+            : v.likesCount - 1
+        }
+      : v
+  )
+);
         }else{
-            setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, likesCount: v.likesCount - 1 } : v))
+            setVideos(prev =>
+  prev.map(v =>
+    v._id === item._id
+      ? {
+          ...v,
+          liked: response.data.like,
+          likesCount: response.data.like
+            ? v.likesCount + 1
+            : v.likesCount - 1
+        }
+      : v
+  )
+);
         }
         
     }
@@ -34,9 +58,33 @@ const Home = () => {
         const response = await axios.post(`${API_BASE_URL}/api/food/save`, { foodId: item._id }, { withCredentials: true })
         
         if(response.data.save){
-            setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, savesCount: v.savesCount + 1 } : v))
+            setVideos(prev =>
+  prev.map(v =>
+    v._id === item._id
+      ? {
+          ...v,
+          saved: response.data.save,
+          savesCount: response.data.save
+            ? v.savesCount + 1
+            : v.savesCount - 1
+        }
+      : v
+  )
+)
         }else{
-            setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, savesCount: v.savesCount - 1 } : v))
+            setVideos(prev =>
+  prev.map(v =>
+    v._id === item._id
+      ? {
+          ...v,
+          saved: response.data.save,
+          savesCount: response.data.save
+            ? v.savesCount + 1
+            : v.savesCount - 1
+        }
+      : v
+  )
+)
         }
     }
 
